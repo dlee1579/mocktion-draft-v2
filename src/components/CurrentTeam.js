@@ -19,6 +19,14 @@ export const CurrentTeam = (props) => {
     const [flex, setFlex] = useState();
     const [starters, setStarters] = useState([]);
     const [bench, setBench] = useState([]);
+    const emptyTeamStruct = {
+        QB: [],
+        RB: [],
+        WR: [],
+        TE: [],
+        DST: [],
+        K: [],
+    }
 
     useEffect(() => {
         updateTeamStruct();
@@ -102,6 +110,22 @@ export const CurrentTeam = (props) => {
         }
     }
 
+    const clearTeam = () => {
+        setTeamStruct(emptyTeamStruct);
+        setStarters([]);
+        setBench([]);
+        setFlex();
+        props.setCurrentTeam([]);
+        props.setBudget(200);
+        if (props.position === "ALL") {
+            props.setAvailable(props.AuctionValues)
+        }
+        else {
+            props.setAvailable(props.AuctionValues.filter(player => player.Position === props.position))
+        }
+
+    }
+
     const removeFromTeam = (player) => {
         try {
             console.log(player);
@@ -147,6 +171,7 @@ export const CurrentTeam = (props) => {
 
     return (
         <div>
+            <Button onClick={()=>clearTeam()}>Clear Team</Button>
             <TableContainer>
                 <Table aria-label="simple table">
                     <TableHead>

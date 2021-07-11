@@ -7,12 +7,19 @@ import CurrentTeam from '../components/CurrentTeam';
 // import Container from 'react-bootstrap/Container';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
-import { Container, Row, Col} from 'react-bootstrap'
+import { Container, Row, Col} from 'react-bootstrap';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+
 
 export const Home = () => {
     const [currentTeam, setCurrentTeam] = useState([]);
     const [available, setAvailable] = useState([]);
     const [budget, setBudget] = useState(200);
+    const [position, setPosition] = useState("ALL");
+    const positions = ["ALL", "RB", "WR", "TE", "DST", "K"];
 
     useEffect(() => {
         setAvailable(AuctionValues);
@@ -38,6 +45,17 @@ export const Home = () => {
         setBudget(200-spent);
     }
 
+    const handlePositionChange = (event) => {
+        setPosition(event.target.value);
+        console.log(event.target.value);
+        if (event.target.value === "ALL") {
+            setAvailable(AuctionValues)
+        }
+        else {
+            setAvailable(AuctionValues.filter(player => player.Position === event.target.value))
+        }
+    }
+
     return (
         <div>
             <h1>Mocktion Draft 2021</h1>
@@ -46,12 +64,27 @@ export const Home = () => {
                 <Row>
                     <Col style={{float: 'left'}} sm={8}>
                         <h4>All Available Players</h4>
-                        <AvailablePlayers style={{float: 'left'}} setAvailable={setAvailable} setCurrentTeam={setCurrentTeam} available={available} currentTeam={currentTeam}/>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value= {position}
+                            onChange={handlePositionChange}
+                            >
+                            <MenuItem value={"ALL"}>ALL</MenuItem>
+                            <MenuItem value={"QB"}>QB</MenuItem>
+                            <MenuItem value={"RB"}>RB</MenuItem>
+                            <MenuItem value={"WR"}>WR</MenuItem>
+                            <MenuItem value={"TE"}>TE</MenuItem>
+                            <MenuItem value={"DST"}>DST</MenuItem>
+                            <MenuItem value={"K"}>K</MenuItem>
+                        </Select>
+                            {/* <FormHelperText>Label + placeholder</FormHelperText> */}
+                        <AvailablePlayers style={{float: 'left'}} setAvailable={setAvailable} setCurrentTeam={setCurrentTeam} available={available} currentTeam={currentTeam}  />
                     </Col>
-                    <Col style={{float: 'right'}} sm={4}>
+                    <Col style={{top: '1em', right: '1em', position: 'fixed'}} sm={4}>
                         <h4>Current Team</h4>
                         <h4>Remaining Budget: {budget}</h4>
-                        <CurrentTeam currentTeam={currentTeam} setCurrentTeam={setCurrentTeam} available={available} setAvailable={setAvailable}/>
+                        <CurrentTeam currentTeam={currentTeam} setCurrentTeam={setCurrentTeam} available={available} setAvailable={setAvailable} budget={budget} setBudget = {setBudget} position={position} AuctionValues={AuctionValues}/>
                     </Col>
                 </Row>
             </Container>
