@@ -173,7 +173,7 @@ export const CurrentTeam = (props) => {
 
     return (
         <div>
-            <Button onClick={()=>clearTeam()}>Clear Team</Button>
+            <Button onClick={()=>clearTeam()} style={{backgroundColor: "#d3d3d3"}}>Clear Team</Button>
             <TableContainer>
                 <Table aria-label="simple table">
                     <TableHead>
