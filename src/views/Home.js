@@ -48,11 +48,11 @@ export const Home = () => {
     const handlePositionChange = (event) => {
         setPosition(event.target.value);
         console.log(event.target.value);
-        if (event.target.value === "ALL") {
-            setAvailable(AuctionValues)
+        if (event.target.value != "ALL") {
+            setAvailable(AuctionValues.filter(player => player.Position === event.target.value && !currentTeam.includes(player)))
         }
         else {
-            setAvailable(AuctionValues.filter(player => player.Position === event.target.value))
+            setAvailable(AuctionValues.filter(player => !currentTeam.includes(player)))
         }
     }
 
