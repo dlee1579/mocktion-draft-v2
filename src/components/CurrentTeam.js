@@ -121,7 +121,9 @@ export const CurrentTeam = (props) => {
             props.setAvailable(props.AuctionValues)
         }
         else {
-            props.setAvailable(props.AuctionValues.filter(player => player.Position === props.position && props.AuctionValues.includes(player)))
+            props.setAvailable(props.AuctionValues.filter(player => {
+                return player.Position === props.position && props.AuctionValues.includes(player)}
+                ))
         }
 
     }
