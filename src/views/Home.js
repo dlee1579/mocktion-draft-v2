@@ -40,7 +40,7 @@ export const Home = () => {
 
     return (
         <div>
-            <h1>Mocktion Draft</h1>
+            <h1>Mocktion Draft 2021</h1>
             <h3>AKA How to Prepare for your Auction Draft</h3>
             <Container>
                 <Row>
